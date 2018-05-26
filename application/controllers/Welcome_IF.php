@@ -140,11 +140,11 @@ class Welcome_IF extends CI_Controller {
 			$url = $this->input->post("url");
 			$this->users_model->addCompany($name,$address,$phone,$description,$location,$lat,$lng,$url);
 			$data['company'] = $this->users_model->getCompanyData();
-			$data['activeLink'] = 'Company';
-			$this->load->view('templates/header.php',$data);
-			$this->load->view('IF/menu/index.php',$data);
-			$this->load->view('pages/company/index.php',$data);
-			$this->load->view('templates/footer.php');
+		    $data['activeLink'] = 'Company';
+		    $this->load->view('templates/header.php',$data);
+		    $this->load->view('menu/index.php',$data);
+		    $this->load->view('pages/company/index.php',$data);
+		    $this->load->view('templates/footer.php');
 		}
 	}
 
@@ -847,7 +847,6 @@ class Welcome_IF extends CI_Controller {
 	public function eroSendMail(){
 		$this->load->library('email');
 		$this->load->model('users_model');
-
 		$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
 		$this->email->to($this->input->post('email'));
 		$this->email->subject($this->input->post('title'));
@@ -896,7 +895,7 @@ class Welcome_IF extends CI_Controller {
 		$this->load->Model('users_model');
 		$data['comment'] = $this->users_model->getComment($stuId);
 		$data['stuComment'] = $this->users_model->getStuComment($stuId);
-		var_dump($data['stuComment']);die();
+		// var_dump($data['stuComment']);die();
 		$data['activeLink'] = 'student';
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/index.php',$data);
