@@ -45,6 +45,11 @@ class Supervisor_model extends CI_Model {
 		 $query =  $this->db->get_where('student',$userRole);
 	     return $query->result_array(); 
 	}
+    /**
+     * to Save to questionnaire and sent mail to ERO team
+     * @param $data get all field in questionnair table
+     * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+     */
     public function saveQuestionnaire($student_id,$sex,$major,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10,$q11,$q12,$q13,$q14,$q15,$q16,$q17)
     {
         $data = array('student_id' =>$student_id,
@@ -70,7 +75,12 @@ class Supervisor_model extends CI_Model {
         $this->db->insert('questionnaire', $data);
 
     }
-////////
+/**
+* To student id from student table
+* @param string $data store all feild the table questionnaire 
+* @param 
+* @author Bunthean MOV <bunthean.mov2727@gmail.com>
+*/
     public function getSId( $studentId)
     {
         $this->db->select("id");
@@ -79,31 +89,23 @@ class Supervisor_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array(); 
     }
-     /**
-     * Select stuent's questionnaire to complete
-     * @param string $data store all feild the table questionnaire 
-     * @param 
-     * @author Bunthean MOV <bunthean.mov2727@gmail.com>
-     */
+ /**
+ * Select all field in questionnair table to view in questionnair form
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
     public function getQuestionnaire($studentId)
     {
         $this->db->select("*");
         $this->db->from('questionnaire');
         $this->db->where('questionnaire.student_id', $studentId);
         $query = $this->db->get();
-        return $query->result_array(); 
-    
+        return $query->result_array();  
         $this->db->insert('questionnaire', $data);
     }
-
-   function countStudentQuestionnaire($studentId)
-   {
-        $this->db->select('*');
-        $this->db->from('questionnaire');
-        $this->db->where('questionnaire.student_id', $studentId);
-        return $this->db->affected_rows();
-   }
-
+ /**
+ * Select all field in questionnair table to view in questionnair form and also student's name na company's name
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */   
 	public function getQuestionnaireInfo($stuId)
     { 
      $this->db->select("s.firstname as sFirstname,s.lastname as sLastname,c.name ");
@@ -114,7 +116,10 @@ class Supervisor_model extends CI_Model {
     $query = $this->db->get();
      return $query->result_array(); 
     }
-	///////
+/**
+ * Get detail data from student to list on student profile
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	public function getDataStudentDetail($studentId)
     {
         $this->db->select("s.*, c.url, CONCAT(t.firstname, ' ', t.lastname) as tutorName ");
@@ -126,14 +131,20 @@ class Supervisor_model extends CI_Model {
         $query = $this->db->get();
         return $query-> result_array();
     }
+/**
+ * Count student to show on supervisor home page
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
     public function countStudent()
     {
         $this->db->select('*');
         $query = $this->db->get('student');
         return $query->num_rows();
     }
-
-    /*get email from database*/
+/**
+ * Select data email from view in database
+ * @author Devith CHEA <bunthean.mov2727@gmail.com>
+ */
     public function mGetEmail()
     {
         $this->db->select("*");
