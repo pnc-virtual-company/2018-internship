@@ -15,6 +15,10 @@ class supervisor extends CI_Controller {
 			$this->load->Model('Calendar_model');
 			$this->load->Model('Supervisor_model');
 	}
+/**
+ * Welcome to home page 
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	function index()
 	{
 		$this->load->helper('form');
@@ -26,18 +30,29 @@ class supervisor extends CI_Controller {
 		$this->load->view('supervisorDashboard/index.php');
 		$this->load->view('templates/footer.php');
 	}
+/**
+ * List all student in supervisor dashboard
+ * $data['student'] get list all student on student page
+ *$data['activeLink'] Active on menu student
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	function student()
 	{
 		$this->load->helper('form');
 		$this->load->Model('Supervisor_model');
 	    $data['student'] = $this->Supervisor_model->getDataStudentList();
-	    $data['activeLink'] = 'Student';
 	    $data['activeLink'] = 'student';
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/supervisorMenu.php',$data);
 		$this->load->view('supervisorDashboard/student/index.php',$data);
 		$this->load->view('templates/footer.php');
 	}
+/**
+ * To view student's profile
+ * $data['student'] get student information in detail 
+ *$data['activeLink'] Active on menu student
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	function studentProfile()
 	{
 		$studentId = $_GET['id'];
@@ -50,18 +65,13 @@ class supervisor extends CI_Controller {
 		$this->load->view('supervisorDashboard/student/studentProfile.php',$data);
 		$this->load->view('templates/footer.php');
 	}
-	public function detailCompany()
-	{
-		$data['activeLink'] = 'Company';
-		$this->load->view('templates/header.php',$data);
-		$this->load->view('menu/supervisorMenu.php',$data);
-		$this->load->view('supervisorDashboard/student/studentProfile.php');
-		$data['activeLink'] = 'student';
-		$this->load->view('templates/header.php',$data);
-		$this->load->view('menu/supervisorMenu.php',$data);
-		$this->load->view('supervisorDashboard/student/index.php',$data);
-		$this->load->view('templates/footer.php');
-	}
+/**
+ * To view and complete questionnair
+ * $data['student']get questionniar of student to list on questionnair from 
+ * $data['studentInfo']  list questionniar of student to list on questionnair from 
+ *$data['activeLink'] Active on menu student
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	function questionnaire()
 	{
 		$studentId = $_GET['id'];
@@ -69,100 +79,63 @@ class supervisor extends CI_Controller {
     	$this->load->Model('Supervisor_model');	
 	    $data['studentInfo'] = $this->Supervisor_model->getQuestionnaireInfo($studentId);
 	    $data['student'] = $this->Supervisor_model->getQuestionnaire($studentId);
-	    $data['count'] = $this->Supervisor_model->countStudentQuestionnaire($studentId);
+
+	    if (!$data['student']) {
+	    	$data['student'] =  array('question0' => 0);
+        }
+	    $data['activeLink'] = 'questionnair';	
+	    $this->load->view('templates/header.php');
+		$this->load->view('menu/supervisorMenu.php', $data);
+		$this->load->view('supervisorDashboard/questionnair.php',$data);
+		$this->load->view('templates/footer.php');		
 	    
-	    if ($data['count']==2){
-    	    echo "<script>
-    	    	alert('There are no fields to generate a report');
-    	    	window.location.href='viewProfile';  
-    	    </script>"; 
-    	    $data['activeLink'] = 'questionnaire';
-	     	$this->load->view('templates/header.php');
-	     	$this->load->view('menu/supervisorMenu.php', $data);
-	     	$this->load->view('supervisorDashboard/questionnair.php');
-	     	$this->load->view('templates/footer.php');
-
-	    }else{
-		    if (!$data['student']) {
-		    	$data['student'] =  array('question0' => 0);
-	        }
-
-		    $data['activeLink'] = 'questionnair';	
-		    $this->load->view('templates/header.php');
-			$this->load->view('menu/supervisorMenu.php', $data);
-			$this->load->view('supervisorDashboard/questionnair.php',$data);
-			$this->load->view('templates/footer.php');		
-	    }
 	}
-
+/**
+ * Save questionnaire when user click on save button
+ * $data['student'] list student's questionnair
+ * $data['student'] Insert questionnair to database
+ *$data['activeLink'] Active on menu student
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	public function saveQuestionnaire()
 	{
 		$qid = $_GET['id'];
 		$stuid = $_GET['stuId'];
 		$this->load->helper('form');
-		$this->load->library('form_validation');
-	    $this->form_validation->set_rules('sex', 'gender', 'required'); 
-	    $this->form_validation->set_rules('q1', 'How likely is that you would recommend a PN intern ', 'required'); 
-	    $this->form_validation->set_rules('major', 'What was the major of your intern at PNC', 'required'); 
-	    $this->form_validation->set_rules('q2', 'Did your company use Linux operating system', 'required'); 
-	    $this->form_validation->set_rules('q3', 'Did your company use the CISCO device', 'required'); 
-	    $this->form_validation->set_rules('q4', 'Respect of working hours', 'required'); 
-	    $this->form_validation->set_rules('q5', 'Information management skills (synthesis, attention to details, broad picture', 'required'); 
-	    $this->form_validation->set_rules('q6', 'Communication', 'required'); 
-	    $this->form_validation->set_rules('q7', 'Interest in learning, curiosity', 'required'); 
-	    $this->form_validation->set_rules('q8', 'Leadership, team-work', 'required'); 
-	    $this->form_validation->set_rules('q9', 'Critical thinking, problem solving, decision-making, logic, creativity', 'required'); 
-	    $this->form_validation->set_rules('q10', 'Good relationship with coworkers', 'required'); 
-	    $this->form_validation->set_rules('q11', 'Self-management (time, stress, priority, autonomy etc.', 'required'); 
-	    $this->form_validation->set_rules('q12', 'Feel free to add any comments regarding the intern performance', 'required'); 
-	    $this->form_validation->set_rules('q13', 'Writing documents and mails', 'required'); 
-	    $this->form_validation->set_rules('q14', 'Speaking in meetings', 'required'); 
-	    $this->form_validation->set_rules('q15', 'Researching information in English, reading documents', 'required'); 
-	    $this->form_validation->set_rules('q16', 'Feel free to add any comments regarding the interns performance', 'required'); 
-	    $this->form_validation->set_rules('q17', 'What skills would you have wished your PN intern had', 'required'); 
-	    if ($this->form_validation->run() == FALSE) 
-	    {
-		    $this->load->Model('Supervisor_model');
-		    $data['studentInfo'] = $this->Supervisor_model->getQuestionnaireInfo($stuid);
-		    $data['student'] = $this->Supervisor_model->getQuestionnaire($stuid);
-		    $data['activeLink'] = 'questionnaire';
-	     	$this->load->view('templates/header.php');
-	     	$this->load->view('menu/supervisorMenu.php' ,$data);
-	     	$this->load->view('supervisorDashboard/questionnair.php',$data);
-	     	$this->load->view('templates/footer.php');
-	    }else{
-			$sex = $this->input->post('sex');
-		    $major = $this->input->post('major');
-		    $q1 = $this->input->post('q1');
-		    $q2 = $this->input->post('q2');
-		    $q3 = $this->input->post('q3');
-		    $q4 = $this->input->post('q4');
-		    $q5 = $this->input->post('q5');
-		    $q6 = $this->input->post('q6');
-		    $q7 = $this->input->post('q7');
-		    $q8 = $this->input->post('q8');
-		    $q9 = $this->input->post('q9');
-		    $q10= $this->input->post('q10');
-		    $q11= $this->input->post('q11');
-		    $q12= $this->input->post('q12');
-		    $q13= $this->input->post('q13');
-		    $q14= $this->input->post('q14');
-		    $q15= $this->input->post('q15');
-		    $q16= $this->input->post('q16');
-		    $q17= $this->input->post('q17');
-		    $this->load->Model('Supervisor_model');
-		    $data['student'] = $this->Supervisor_model->getQuestionnaireInfo($stuid);
-		    $data['student'] = $this->Supervisor_model->saveQuestionnaire($stuid,$sex,$major,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10,$q11,$q12,$q13,$q14,$q15,$q16,$q17);
-		    $data['activeLink'] = 'questionnaire';
-	     	$this->load->view('templates/header.php');
-	     	$this->load->view('menu/supervisorMenu.php' ,$data);
-	     	$this->load->view('supervisorDashboard/index.php',$data);
-	     	$this->load->view('templates/footer.php');
-		    $this->sendMailToSupervisor();	
-	    }
-		
+		$sex = $this->input->post('sex');
+	    $major = $this->input->post('major');
+	    $q1 = $this->input->post('q1');
+	    $q2 = $this->input->post('q2');
+	    $q3 = $this->input->post('q3');
+	    $q4 = $this->input->post('q4');
+	    $q5 = $this->input->post('q5');
+	    $q6 = $this->input->post('q6');
+	    $q7 = $this->input->post('q7');
+	    $q8 = $this->input->post('q8');
+	    $q9 = $this->input->post('q9');
+	    $q10= $this->input->post('q10');
+	    $q11= $this->input->post('q11');
+	    $q12= $this->input->post('q12');
+	    $q13= $this->input->post('q13');
+	    $q14= $this->input->post('q14');
+	    $q15= $this->input->post('q15');
+	    $q16= $this->input->post('q16');
+	    $q17= $this->input->post('q17');
+	    $this->load->Model('Supervisor_model');
+	    $data['student'] = $this->Supervisor_model->getQuestionnaireInfo($stuid);
+	    $data['student'] = $this->Supervisor_model->saveQuestionnaire($stuid,$sex,$major,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10,$q11,$q12,$q13,$q14,$q15,$q16,$q17);
+	    $data['student'] = $this->Supervisor_model->countStudent();
+	    $data['activeLink'] = 'questionnaire';
+     	$this->load->view('templates/header.php');
+     	$this->load->view('menu/supervisorMenu.php' ,$data);
+     	$this->load->view('supervisorDashboard/index.php',$data);
+     	$this->load->view('templates/footer.php');
+	    $this->sendMailToSupervisor();	
 	}
-	/* send email to someone*/
+/**
+ * To sent email to supervisor when supervisor submit student's questionniar
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	public function sendMailToSupervisor()
 	{
 		$this->load->library('email');
@@ -177,14 +150,12 @@ class supervisor extends CI_Controller {
 			return $this->email->print_debugger();;
 		}
 	}
-	function comment()
-	{
-		$data['activeLink'] = 'student';
-		$this->load->view('templates/header.php',$data);
-		$this->load->view('menu/supervisorMenu.php',$data);
-		$this->load->view('supervisorDashboard/student/comment.php',$data);
-		$this->load->view('templates/footer.php');
-	}
+/**
+ * To view student profile
+ * $data['student'] list sudent in detail
+ *$data['activeLink'] Active on menu student
+ * @author Bunthean MOV <bunthean.mov2727@gmail.com>
+ */
 	function viewProfile()
 	{
 		$this->load->helper('form');
