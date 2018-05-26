@@ -85,14 +85,22 @@ class tutor_model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('worklog');
-        $this->db->where('stu_id', $stuId);
+        $this->db->where('student_id', $stuId);
         $query = $this->db->get();
         return $query->result_array();
     }
-    public function insertComment($comment)
+    public function getTuCmt($stuId)
+    {
+        $this->db->select("comment,id,student_id");
+        $this->db->from("comment");
+        $this->db->where('comment.id', $stuId);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function insertComment($comment,$stuId)
     {
          $data = array('comment'=>$comment,
-                        'student_id' =>1
+                        'student_id' =>$stuId
                  );
         $this->db->insert('comment', $data);
     

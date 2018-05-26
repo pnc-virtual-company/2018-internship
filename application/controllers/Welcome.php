@@ -8,6 +8,13 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		log_message('debug', 'URI=' . $this->uri->uri_string());
+		if ($this->session->loggIn == TRUE) {
+			
+		}else
+		{
+			redirect('connection/login');
+
+		}
 	}
 
 	public function index()

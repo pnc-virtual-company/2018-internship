@@ -30,7 +30,8 @@ $(function(){
                 // Available buttons when adding
                 buttons: {
                     add: {
-                        id: 'add-event', // Buttons id
+                        id: 'add-event1', // Buttons id
+                        id: 'add-event2', // Buttons id
                         css: 'btn-success', // Buttons class
                         label: 'Add' // Buttons label
                     }
@@ -110,12 +111,14 @@ $(function(){
                 // Available buttons when editing
                 buttons: {
                     delete: {
-                        id: 'delete-event',
+                        id: 'delete-eventERO',
+                        id: 'delete-eventSupervisor',
                         css: 'btn-danger',
                         label: 'Delete'
                     },
                     update: {
-                        id: 'update-event',
+                        id: 'update-eventSupervisort',
+                        id: 'update-eventERO',
                         css: 'btn-success',
                         label: 'Update'
                     }
@@ -146,7 +149,7 @@ $(function(){
     }
 
     // Handle Click on Add Button
-    $('.modal').on('click', '#add-event',  function(e){
+    $('.modal').on('click', '#add-event1',  function(e){
         if(validator(['title', 'description'])) {
             $.post(base_url+'Welcome_IF/addEvent', {
                 title: $('#title').val(),
@@ -166,10 +169,9 @@ $(function(){
         }
     });
 
-    // Handle Click on Add Button
-    $('.modal').on('click', '#add-event',  function(e){
+    $('.modal').on('click', '#add-event2',  function(e){
         if(validator(['title', 'description'])) {
-            $.post(base_url+'supervisor/SupervisoraddEvent', {
+            $.post(base_url+'supervisor/saddEvent', {
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
@@ -189,14 +191,36 @@ $(function(){
 
 
     // Handle click on Update Button
-    $('.modal').on('click', '#update-event',  function(e){
+    $('.modal').on('click', '#update-eventERO',  function(e){
         if(validator(['title', 'description'])) {
             $.post(base_url+'Welcome_IF/updateEvent', {
                 id: currentEvent._id,
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
-                email: $('#email').val()
+                email: $('#email').val(),
+                userEmail: $('#userEmail').val(),
+                password: $('#password').val()
+            }, function(result){
+                $('.alert').addClass('alert-success').text('Event updated successfuly');
+                $('.modal').modal('hide');
+                $('#calendar').fullCalendar("refetchEvents");
+                hide_notify();
+                
+            });
+        }
+    });
+    // Handle click on Update Button
+    $('.modal').on('click', '#update-eventSupervisor',  function(e){
+        if(validator(['title', 'description'])) {
+            $.post(base_url+'supervisor/supdateEvent', {
+                id: currentEvent._id,
+                title: $('#title').val(),
+                description: $('#description').val(),
+                color: $('#color').val(),
+                email: $('#email').val(),
+                userEmail: $('#userEmail').val(),
+                password: $('#password').val()
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event updated successfuly');
                 $('.modal').modal('hide');
@@ -207,11 +231,19 @@ $(function(){
         }
     });
 
-
+    // Handle Click on Delete Button
+    $('.modal').on('click', '#delete-eventERO',  function(e){
+        $.get(base_url+'Welcome_IF/deleteEvent?id=' + currentEvent._id, function(result){
+            $('.alert').addClass('alert-success').text('Event deleted successfully !');
+            $('.modal').modal('hide');
+            $('#calendar').fullCalendar("refetchEvents");
+            hide_notify();
+        });
+    });
 
     // Handle Click on Delete Button
-    $('.modal').on('click', '#delete-event',  function(e){
-        $.get(base_url+'Welcome_IF/deleteEvent?id=' + currentEvent._id, function(result){
+    $('.modal').on('click', '#delete-eventSupervisor',  function(e){
+        $.get(base_url+'supervisor/sdeleteEvent?id=' + currentEvent._id, function(result){
             $('.alert').addClass('alert-success').text('Event deleted successfully !');
             $('.modal').modal('hide');
             $('#calendar').fullCalendar("refetchEvents");

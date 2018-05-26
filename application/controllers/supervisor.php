@@ -5,6 +5,15 @@ class supervisor extends CI_Controller {
 	public function __construct() {
 			parent::__construct();
 			log_message('debug', 'URI=' . $this->uri->uri_string());
+			if ($this->session->loggIn == TRUE) {
+			
+		}else
+		{
+			redirect('connection/login');
+
+		}
+			$this->load->Model('Calendar_model');
+			$this->load->Model('Supervisor_model');
 	}
 /**
  * Welcome to home page 
@@ -172,44 +181,54 @@ class supervisor extends CI_Controller {
 	}
 
 	/* send email to someone*/
-	public function sendMail(){
+	public function supervisorSendMail(){
 		$userEmail = $this->input->post('userEmail');
 		$userPass = $this->input->post('password');
-		 $config = array(
-		  'protocol' => 'smtp',
-		  'smtp_host' => 'ssl://smtp.googlemail.com',
-		  'smtp_port' => 465,
-		  'smtp_user' => $userEmail,
-		  'smtp_pass' => $userPass,
-		  'mailtype' => 'html',
-		  'charset' => 'utf-8',
-		  'wordwrap' => TRUE,
-		  'newline' => "\r\n"
-		 );
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => $userEmail,
+			'smtp_pass' => $userPass,
+			'mailtype' => 'html',
+			'charset' => 'utf-8',
+			'wordwrap' => TRUE,
+			'newline' => "\r\n"
+		);
 		$this->load->library('email',$config);
 
 		$this->email->from($userEmail);
-		$this->input->post('title');
-		
+
 		$this->email->to($this->input->post('email'));
 		$this->email->subject($this->input->post('title'));
 		$this->email->message($this->input->post('description'));
 		if ($this->email->send()) {
-			echo "successfully";
+			return TRUE;
 		}else{
 			echo $this->email->print_debugger();
 		}
 	}
 
-	Public function SupervisoraddEvent()
-	{
+	/*Add new event */
+		Public function saddEvent()
+		{
+			$result=$this->Calendar_model->addEvent();
+			echo $result;
+			$this->supervisorSendMail();
+		}
 
-		$result=$this->Calendar_model->sAddEvent();
-		echo $result;
-		$this->sendMail();
-	}
+		/*Update Event */
+		Public function updateEvent()
+		{
+			$result=$this->Calendar_model->supdateEvent();
+			echo $result;
+			$this->supervisorSendMail();
+		}
 
+		Public function sdeleteEvent()
+		{
+			$result=$this->Calendar_model->deleteEvent();
+			echo $result;
+		}
 }
-
-
 ?>

@@ -34,6 +34,13 @@
 					</div>
 				</div>
 				<div class="form-group row col-md-6 group-col-stu">
+					<label class="col-sm-4 col-form-label" for="">Password</label>
+					<div class="col-sm-8">
+						<input type="text" name="password" id="" class="form-control" placeholder="...">
+						<span class="required text-danger"><?php echo form_error("password"); ?></span>
+					</div>
+				</div>
+				<div class="form-group row col-md-6 group-col-stu">
 					<label class="col-sm-4 col-form-label" for="">Phone Number</label>
 					<div class="col-sm-8">
 						<input type="text" name="phone" id="" class="form-control" placeholder="...">
@@ -47,6 +54,7 @@
 							<option selected>Web</option>
 							<option>SNA</option>
 						</select>
+						<span class="required text-danger"><?php echo form_error("batch"); ?></span>
 					</div>
 				</div>
 				<div class="form-group row col-md-6 group-col-stu">
@@ -57,7 +65,7 @@
 								<option><?php echo $sSupervisor['suName'];?></option>
 							<?php endforeach ?>
 						</select>
-						
+						<span class="required text-danger"><?php echo form_error("supervisor"); ?></span>
 					</div>
 				</div>
 				<div class="form-group row col-md-6 group-col-stu">
@@ -94,26 +102,17 @@
 						<input type="file" name="image" id="" class="form-control" placeholder="...">
 					</div>
 				</div><br><br><br>
-
-			</div>
-			<div class="row">
 				<div class="col-md-4"></div>
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-md-2"></div>
-						<div class="col-md-4 text-center">
-							<button class="btn btn-outline-success" type="submit" name="btn-submit">Submit</button>
-						</div>
-						<div class="col-md-4 text-center">
-							<button class="btn btn-outline-danger pull-right" type="reset" name="btn-cancel">Cancel</button>
-						</div>
-						<div class="col-md-2"></div>
-					</div>
+				<div class="col-md-2 text-center">
+					<button class="btn btn-outline-success" type="submit" name="btn-submit">Submit</button>
+				</div>
+				<div class="col-md-2 text-center">
+					<button class="btn btn-outline-danger pull-right" type="reset" name="btn-cancel">Cancel</button>
 				</div>
 				<div class="col-md-4"></div>
 			</div>
 		</form>
 	</div> 
-	<br>
 </div>
 </div>
+

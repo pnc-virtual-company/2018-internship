@@ -25,10 +25,12 @@
 					</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($stuComment as $stuComment):?>
+				<?php endforeach ?>
 				<?php foreach ($comment as $comment):?>
 					<tr class="text-left">
 						<td class="text-center">1 may 2018</td>
-						<td> You should ask your supervisor for have tasks to do</td>
+						<td> <?php echo $stuComment['comment']; ?></td>
 						<td name="stuComment"><?php echo $comment['comment']; ?></td>
 						<td class="text-center">
 							<?php if(0 == $comment['status']) { ?>

@@ -113,7 +113,7 @@
         	 $this->db->from('worklog');
          	 $this->db->where("date >=",$startTime);
          	 $this->db->where("date <=",$endTime);
-         	 $this->db->where("stu_id",$stu_id);
+         	 $this->db->where("student_id",$stu_id);
          	 $query = $this->db->get();
          	 return $query->result_array();
 		}
@@ -123,7 +123,7 @@
 			$data = array(  
 		    	'comment' 		=> $Comment
 		    ); 
-		    $this->db->where('stu_id', 1);
+		    $this->db->where('student_id', 1);
 			$this->db->update('worklog', $data);
 		    
 		}

@@ -427,6 +427,16 @@ class Users_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function getStuComment($stuId)
+    {
+        $this->db->select("worklog.comment,worklog.student_id");
+        $this->db->from('worklog');
+        $this->db->join('student', 'student.id = worklog.student_id');
+        $this->db->where('student.id', $stuId);
+        $query = $this->db->get();
+        // var_dump($query->result_array());die();
+        return $query->result_array();
+    }
 
     /*get email from database*/
     public function mGetEmail()
@@ -618,6 +628,7 @@ class Users_model extends CI_Model {
 
         $newdata = array(
             'login' => $row->username,
+            'loggIn' => TRUE,
             'id' => $row->id,
             'role' => $row->userrole_id,
             'isAdmin' => $isAdmin,

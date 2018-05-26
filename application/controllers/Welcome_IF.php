@@ -9,6 +9,13 @@ class Welcome_IF extends CI_Controller {
 		parent::__construct();
 		log_message('debug', 'URI=' . $this->uri->uri_string()); 
 		$this->load->helper(array('form','url'));
+		if ($this->session->loggIn == TRUE) {
+			
+		}else
+		{
+			redirect('connection/login');
+
+		}
 	}
 	// view login
 	public function index()
@@ -168,6 +175,7 @@ class Welcome_IF extends CI_Controller {
 		$this->load->view('pages/tutor/index.php',$data);
 		$this->load->view('templates/footer.php');
 	}
+	//  load page add tutor
 	public function loadAddTutor()
 	{
 		$this->load->helper('form');
@@ -179,66 +187,71 @@ class Welcome_IF extends CI_Controller {
 		$this->load->view('pages/tutor/addNew.php',$data);
 		$this->load->view('templates/footer.php');
 	}
-	/* send email with create tutor and send password to user*/
-	public function addTutor($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false)
+	/* sned email */
+	public function sendEmailCreate($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false)
 	{
-		// $this->load->library('form_validation');
-		// $this->form_validation->set_rules("firstname", "First Name",'trim|required|min_length[3]|max_length[15]');
-		// $this->form_validation->set_rules("lastname" ,"Last Name",'trim|required|min_length[3]|max_length[20]');
-		// $this->form_validation->set_rules("userName" ,"User Name",'trim|required|min_length[3]|max_length[100]');
-		// $this->form_validation->set_rules("position" ,"Position",'trim|required|min_length[3]|max_length[50]');
-		// $this->form_validation->set_rules("phone" ,"Mobile Number",'trim|required|min_length[0]|max_length[25]');
-		// $this->form_validation->set_rules("sEmail" ,"School Email",'trim|required|min_length[0]|max_length[100]');
-		// $this->form_validation->set_rules("company" ,"Company Name",'trim|required|min_length[0]|max_length[50]');
+		$length = rand($chars_min, $chars_max);
+		$selection = 'aeuoyibcdfghjklmnpqrstvwxz';
+		if($include_numbers) {
+			$selection .= "1234567890";
+		}
+		if($include_special_chars) {
+			$selection .= "!@\"#$%&[]{}?|";
+		}
 
-		// if ($this->form_validation->run() == FALSE) {
-		// 	$this->load->helper('form');
-		// 	$this->load->Model('users_model');
-		// 	$data['company'] = $this->users_model->getCompanyData();
-		// 	$data['activeLink'] = 'Tutor';
-		// 	$this->load->view('templates/header.php',$data);
-		// 	$this->load->view('menu/index.php',$data);
-		// 	$this->load->view('pages/tutor/addNew.php',$data);
-		// 	$this->load->view('templates/footer.php');
-		// }else{
-			$length = rand($chars_min, $chars_max);
-			$selection = 'aeuoyibcdfghjklmnpqrstvwxz';
-			if($include_numbers) {
-				$selection .= "1234567890";
-			}
-			if($include_special_chars) {
-				$selection .= "!@\"#$%&[]{}?|";
-			}
+		$password = "";
+		for($i=0; $i<$length; $i++) {
+			$current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
+			$password .=  $current_letter;
+		}  
+		 $config = array(
+		  'protocol' => 'smtp',
+		  'smtp_host' => 'ssl://smtp.googlemail.com',
+		  'smtp_port' => 465,
+		  'smtp_user' => 'devit.chea@student.passerellesnumeriques.org',
+		  'smtp_pass' => '070220506',
+		  'mailtype' => 'html',
+		  'charset' => 'utf-8',
+		  'wordwrap' => TRUE,
+		  'newline' => "\r\n"
+		);              
+		  
+		$this->load->library('email', $config);
 
-			$password = "";
-			for($i=0; $i<$length; $i++) {
-				$current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
-				$password .=  $current_letter;
-			}  
-/*			 $config = array(
-			  'protocol' => 'smtp',
-			  'smtp_host' => 'ssl://smtp.googlemail.com',
-			  'smtp_port' => 465,
-			  'smtp_user' => 'devit.chea@student.passerellesnumeriques.org',
-			  'smtp_pass' => '070220506',
-			  'mailtype' => 'html',
-			  'charset' => 'utf-8',
-			  'wordwrap' => TRUE,
-			  'newline' => "\r\n"
-			);              
-			  
-			$this->load->library('email', $config);
+		$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
+		$this->email->to($this->input->post('sEmail'));
+		$this->email->subject('Password and User Loin to System');
+		$this->email->message($password);
+		if ($this->email->send()) {
+			return true;
+		}else{
+			echo $this->email->print_debugger();
+		}
+	}
+	/* send email with create tutor and send password to user*/
+	public function addTutor()
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules("firstname", "First Name",'trim|required|min_length[3]|max_length[15]');
+		$this->form_validation->set_rules("lastname" ,"Last Name",'trim|required|min_length[3]|max_length[20]');
+		$this->form_validation->set_rules("userName" ,"User Name",'trim|required|min_length[3]|max_length[100]');
+		$this->form_validation->set_rules("position" ,"Position",'trim|required|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules("phone" ,"Mobile Number",'trim|required|min_length[0]|max_length[25]');
+		$this->form_validation->set_rules("sEmail" ,"School Email",'trim|required|min_length[0]|max_length[100]');
+		$this->form_validation->set_rules("company" ,"Company Name",'trim|required|min_length[0]|max_length[50]');
 
-			$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
-			$this->email->to($this->input->post('sEmail'));
-			$this->email->subject('Password and User Loin to System');
-			$this->email->message($password);
-			if ($this->email->send()) {
-				return true;
-			}else{
-				echo $this->email->print_debugger();
-			}*/
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->helper('form');
+			$this->load->Model('users_model');
+			$data['company'] = $this->users_model->getCompanyData();
+			$data['activeLink'] = 'Tutor';
+			$this->load->view('templates/header.php',$data);
+			$this->load->view('menu/index.php',$data);
+			$this->load->view('pages/tutor/addNew.php',$data);
+			$this->load->view('templates/footer.php');
+		}else{
 
+			$this->sendEmailCreate();
 			$this->load->helper('form');
 			$firstname = $this->input->post("firstname");
 			$lastname = $this->input->post("lastname");
@@ -275,7 +288,7 @@ class Welcome_IF extends CI_Controller {
 			$this->load->view('pages/tutor/index.php',$data);
 			$this->load->view('templates/footer.php');	
 
-		//}
+		}
 	}
 	public function detailTutor()
 	{
@@ -763,14 +776,7 @@ class Welcome_IF extends CI_Controller {
 		$stuId = $_GET['id'];
 		$data['activeLink'] = 'student';
 		$this->load->Model('users_model');
-		$maxId = $this->users_model->getMaxStuId();
-		foreach ($maxId as $maxId):
-				$maxId = $maxId['id'];
-             endforeach;
-             $maxId = (int)$maxId;
-             $maxId = $maxId+1;
-		$this->users_model->newStudent($firstname,$lastname,$username,$password,$supervisor,$phone,$batch,$year,$peremail,$schoolemail,$file_name);
-		$this->users_model->newQestionnaire($maxId);
+		$data['stuComment'] = $this->users_model->getStuComment($stuId);
 		$data['comment'] = $this->users_model->validateComment($stuId);
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/index.php',$data);
@@ -782,10 +788,11 @@ class Welcome_IF extends CI_Controller {
 		$cmtId = $_GET['id'];
 		$id = $_GET['stuId'];
 		$this->load->helper('form');
-		$stuComment = $this->input->post("stuComment");
 		$this->load->Model('users_model');
+		$stuComment = $this->input->post("stuComment");
 		$this->users_model->setValidate($cmtId,$stuComment);
 		$data['comment'] = $this->users_model->getComment($id);
+		$data['stuComment'] = $this->users_model->getStuComment($id);
 		$data['activeLink'] = 'student';
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/index.php',$data);
@@ -843,9 +850,9 @@ class Welcome_IF extends CI_Controller {
 		echo json_encode($result);
 	}
 	/* send email to someone*/
-	public function sendMail(){
+	public function eroSendMail(){
 		$this->load->library('email');
-		$this->load->model('users_model');
+		$this->load->model('Calendar_model');
 
 		$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
 		$this->email->to($this->input->post('email'));
@@ -858,28 +865,28 @@ class Welcome_IF extends CI_Controller {
 		}
 
 	}
-	
+
+	/*Add new event */
 	/*Add new event */
 	Public function addEvent()
 	{
-
-		$result=$this->Calendar_model->addEvent();
+		$result=$this->Calendar_model->AddEvent();
 		echo $result;
-		$this->sendMail();
-
+		$this->eroSendMail();
 	}
 	/*Update Event */
 	Public function updateEvent()
 	{
 		$result=$this->Calendar_model->updateEvent();
 		echo $result;
-		$this->sendMail();
+		$this->eroSendMail();
 	}
 	/*Delete Event*/
 	Public function deleteEvent()
 	{
 		$result=$this->Calendar_model->deleteEvent();
 		echo $result;
+
 	}
 	Public function dragUpdateEvent()
 	{	
@@ -894,6 +901,8 @@ class Welcome_IF extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->Model('users_model');
 		$data['comment'] = $this->users_model->getComment($stuId);
+		$data['stuComment'] = $this->users_model->getStuComment($stuId);
+		var_dump($data['stuComment']);die();
 		$data['activeLink'] = 'student';
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/index.php',$data);

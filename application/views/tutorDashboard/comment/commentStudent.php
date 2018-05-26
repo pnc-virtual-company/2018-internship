@@ -27,18 +27,15 @@
 					</tr>
 				</thead>
 				<tbody>
-						<?php foreach ($comment as $getComment):?>			
-						  
-							
-								
-	
+						<?php foreach ($tutorComment as $tutorComment):?>			
+						<?php endforeach ?>
+						<?php foreach ($stuComment as $getComment):?>			
 					<tr>
 						<td class="text-center">1 may 2018</td>
 						<td class="text-center"><?php echo $getComment['comment'];?></td>
-						<td class="text-center"></td>
-
+						<td class="text-center"><?php echo $tutorComment['comment'];?></td>
 						<td class="text-center">
-							<a href="href="<?php echo base_url();?>tutorDas/addCommStuDas">
+							<a href="<?php echo base_url();?>tutorDas/addCommStuDas?&id=<?php echo $getComment['student_id']; ?>">
 								<i class="mdi  mdi-pencil mdi-24px text-success"></i>
 							</a>
 						</td>
@@ -48,18 +45,8 @@
 			</table>
 		</div>
 		<!-- <div class="col-md-3"></div> -->
+		<?php endforeach ?>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<a href="<?php echo base_url();?>tutorDas/addCommStuDas?&id=<?php echo $getComment['stu_id']; ?>">
-					
-					<?php endforeach ?>
-				
-				<button class="btn btn-primary tBtn"><i class="mdi mdi-plus-box "></i>Add comment</button>
-			</a>
-		</div>
-	</div>
-
 </div>
 
 

@@ -1,5 +1,16 @@
 <?php 
 class cStudent extends CI_controller {
+	public function __construct() {
+			parent::__construct();
+			log_message('debug', 'URI=' . $this->uri->uri_string());
+			if ($this->session->loggIn == TRUE) {
+			
+		}else
+		{
+			redirect('connection/login');
+
+		}
+	}
 	// Student home
 	public function index() 
 	{
@@ -46,6 +57,16 @@ class cStudent extends CI_controller {
 		$this->load->view('menu/studentMenu.php',$data);
 		$this->load->view('student/calendarStu.php',$data);
 			// $this->load->view('templates/footer.php');
+	}
+
+	// update profile page
+	public function userProfile() 
+	{
+		// $data['activeLink'] = 'Calendar';
+		$this->load->view('templates/header.php');
+		$this->load->view('menu/studentMenu.php');
+		$this->load->view('student/updateProfile.php');
+		$this->load->view('templates/footer.php');
 	}
 // project work-log report
 
@@ -131,7 +152,7 @@ class cStudent extends CI_controller {
 		$data['activeLink'] = 'work-log';
 		$this->load->helper('form');
 		$this->load->Model('m_worklog');
-		$data['worklog'] = $this->m_worklog->weeklyWorklog();
+		$data['worklog'] = $this->m_worklog->getComment();
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/studentMenu.php',$data);
 		$this->load->view('student/worklog.php',$data);
