@@ -10,4 +10,3 @@ $config['protocol'] = 'smtp';
 $config['charset'] = 'utf-8';
 $config['wordwrap'] = TRUE;
 $config['newline'] = "\r\n";
-?>
