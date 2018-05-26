@@ -17,13 +17,15 @@
 		<?php foreach ($student as $student):?>
 		<div class="col-md-1"></div>
 		<div class="col-md-4 text-center "><br>
-			<img class="user userSupervisor"  src="<?php echo base_url(); ?>assets/images/studentpiture.jpg" alt="" style="height: 260px; margin-top: 17px; padding: 10px;"><br>
-
+			<?php $imagepart =  "assets/images/users/".$student['picture'];?> 
+			<br>
+			<img src="<?php echo base_url();?><?php echo $imagepart; ?>" alt=""  id="viewStudent"  style="height: 200px; width: 230px; margin-top: 17px; padding: 10px;" >
+			<div style="margin-left: 90px;">				
 			<label for=""><?php echo $student['firstname']; ?></label>
 			<label for=""><?php echo $student['lastname']; ?></label>
+			</div>
 		</div>
 		<div class="col-md-6">
-			
 				<table><br>
 					<tr>
 						<td> 
@@ -34,7 +36,7 @@
 						<td> </td>
 						<td>
 							<div class="form-group">
-								<span class="font-weight-bold"><?php echo $student['firstname']; ?></span>
+								<span><?php echo $student['firstname']; ?></span>
 							</div>
 						</td>
 					</tr>
@@ -47,7 +49,7 @@
 						<td> </td>
 						<td>
 							<div class="form-group">
-								<span class="font-weight-bold" ><?php echo $student['lastname']; ?></span>
+								<span ><?php echo $student['lastname']; ?></span>
 							</div>
 						</td>
 					</tr>
@@ -86,7 +88,7 @@
 						<td> </td>
 						<td>
 							<div class="form-group">
-								<span class="font-weight-bold"><?php echo $student['batch']; ?></span>
+								<span><?php echo $student['batch']; ?></span>
 							</div>
 						</td>
 					</tr>
@@ -99,7 +101,7 @@
 						<td> </td>
 						<td>
 							<div class="form-group">
-								<span class="font-weight-bold"><?php echo $student['year']; ?></span>
+								<span><?php echo $student['year']; ?></span>
 							</div>
 						</td>
 					</tr>
@@ -138,7 +140,7 @@
 						<td> </td>
 						<td>
 							<div class="form-group">
-								<span class="font-weight-bold"><?php echo $student['phone']; ?></span>
+								<span><?php echo $student['phone']; ?></span>
 							</div>
 						</td>
 					</tr>
