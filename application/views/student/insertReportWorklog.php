@@ -12,7 +12,7 @@
 								<tr>
 									<th class="bg-info text-white text-center table-fixed"><br><br>Date & Time</th>
 									<td>
-										<input class="form-control" type="date" name="date" value="2018-05-25"><br>
+										<input class="form-control" type="date" name="date" value=""><br>
 										<div class="row time">
 											<div class="col-md-6">
 												<input class="form-control" type="time" placeholder="Start time" name="starttime" value="">
@@ -85,7 +85,7 @@
 								<tr>
 									<th class="bg-info text-white text-center table-fixed"><br><br>Date & Time</th>
 									<td>
-										<input class="form-control" type="date" name="date" value="<?php echo $workLog['date'] ?>"><br>
+										<input class="form-control" type="date" name="date" value=""><br>
 										<div class="row time">
 											<div class="col-md-6">
 												<input class="form-control" name="starttime" type="time" placeholder="Start time" value="">

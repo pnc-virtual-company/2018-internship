@@ -123,7 +123,7 @@
 			$data = array(  
 		    	'comment' 		=> $Comment
 		    ); 
-		    $this->db->where('stu_id', 1);
+		    $this->db->where('student_id', 1);
 			$this->db->update('worklog', $data);
 		    
 		}
