@@ -17,7 +17,7 @@ class Welcome_IF extends CI_Controller {
 
 		}
 	}
-	// view login
+	// view login 
 	public function index()
 	{
 		$this->load->view('login/login');
@@ -118,7 +118,7 @@ class Welcome_IF extends CI_Controller {
 		$this->form_validation->set_rules("postaladdress" ,"Company Address",'trim|required|min_length[0]|max_length[100]');
 
 		$this->form_validation->set_rules("address" ,"Company location",'trim|required|min_length[0]|max_length[100]');
-		 // $this->form_validation->set_rules("phone" ,"Mobile Number",'trim|required|min_length[0]|max_length[20]|required|regex_match[/^[0-9]{10}$/]');
+		 $this->form_validation->set_rules("phone" ,"Mobile Number",'trim|required|min_length[0]|max_length[20]');
 
 		$this->form_validation->set_rules("url" ,"Company Website",'trim|required|min_length[0]|max_length[50]');
 		if ($this->form_validation->run() == FALSE) {
@@ -142,7 +142,7 @@ class Welcome_IF extends CI_Controller {
 			$data['company'] = $this->users_model->getCompanyData();
 			$data['activeLink'] = 'Company';
 			$this->load->view('templates/header.php',$data);
-			$this->load->view('IF/menu/index.php',$data);
+			$this->load->view('menu/index.php',$data);
 			$this->load->view('pages/company/index.php',$data);
 			$this->load->view('templates/footer.php');
 		}
@@ -187,8 +187,8 @@ class Welcome_IF extends CI_Controller {
 		$this->load->view('pages/tutor/addNew.php',$data);
 		$this->load->view('templates/footer.php');
 	}
-	/* sned email */
-	public function sendEmailCreate($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false)
+	/* send email with create tutor and send password to user*/
+	public function addTutor($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false)
 	{
 		$length = rand($chars_min, $chars_max);
 		$selection = 'aeuoyibcdfghjklmnpqrstvwxz';
@@ -198,39 +198,12 @@ class Welcome_IF extends CI_Controller {
 		if($include_special_chars) {
 			$selection .= "!@\"#$%&[]{}?|";
 		}
-
+		
 		$password = "";
 		for($i=0; $i<$length; $i++) {
 			$current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
 			$password .=  $current_letter;
-		}  
-		 $config = array(
-		  'protocol' => 'smtp',
-		  'smtp_host' => 'ssl://smtp.googlemail.com',
-		  'smtp_port' => 465,
-		  'smtp_user' => 'devit.chea@student.passerellesnumeriques.org',
-		  'smtp_pass' => '070220506',
-		  'mailtype' => 'html',
-		  'charset' => 'utf-8',
-		  'wordwrap' => TRUE,
-		  'newline' => "\r\n"
-		);              
-		  
-		$this->load->library('email', $config);
-
-		$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
-		$this->email->to($this->input->post('sEmail'));
-		$this->email->subject('Password and User Loin to System');
-		$this->email->message($password);
-		if ($this->email->send()) {
-			return true;
-		}else{
-			echo $this->email->print_debugger();
-		}
-	}
-	/* send email with create tutor and send password to user*/
-	public function addTutor()
-	{
+		}   
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules("firstname", "First Name",'trim|required|min_length[3]|max_length[15]');
 		$this->form_validation->set_rules("lastname" ,"Last Name",'trim|required|min_length[3]|max_length[20]');
@@ -250,29 +223,23 @@ class Welcome_IF extends CI_Controller {
 			$this->load->view('pages/tutor/addNew.php',$data);
 			$this->load->view('templates/footer.php');
 		}else{
-
-			$this->sendEmailCreate();
 			$this->load->helper('form');
 			$firstname = $this->input->post("firstname");
 			$lastname = $this->input->post("lastname");
 			$username = $this->input->post("userName");
-			$password = 123;
-			//$password = $password;
+	   		$password = $password;
 			$position = $this->input->post("position");
 			$sEmail = $this->input->post("sEmail");
 			$company = $this->input->post("company");
 			$phone = $this->input->post("phone");
-			// Upload Images
+	   // Upload Images
 			$config['upload_path']          = './assets/images/users/';
 			$config['allowed_types']        = 'gif|jpg|png';
 			$config['max_size']             = 10024;
 			$config['max_width']            = 10024;
 			$config['max_height']           = 7680;
 			$this->load->library('Upload',$config);
-			if (!$this->upload->do_upload('image')) {
-				$error = array('error'=>$this->upload->display_errors());
-				echo "Error Upload Image!";die();
-			}
+			$this->upload->do_upload('image');
 			$iData = array('upload_data'=>$this->upload->data());
 			foreach ($iData as $iData):
 				$file_name = $iData['file_name'];
@@ -286,7 +253,35 @@ class Welcome_IF extends CI_Controller {
 			$this->load->view('templates/header.php',$data);
 			$this->load->view('menu/index.php',$data);
 			$this->load->view('pages/tutor/index.php',$data);
-			$this->load->view('templates/footer.php');	
+			$this->load->view('templates/footer.php'); 
+
+			$config = array(
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				'smtp_user' => 'pnc.temporary.vc2018@passerellesnumeriques.org',
+				'smtp_pass' => 'Pnc!Wep2018?',
+				'mailtype' => 'html',
+				'charset' => 'utf-8',
+				'wordwrap' => TRUE,
+				'newline' => "\r\n"
+			);
+			$this->load->library('email' ,$config);
+
+			$this->email->from('pnc.temporary.vc2018@passerellesnumeriques.org','ERO TEAM');
+			$this->email->to($this->input->post('sEmail'));
+			$this->email->subject('Password and Username login to Internship Followup System');
+			$this->email->message('Dear '.$firstname.' '.$lastname.', <br><br>'."\r\n".
+				'I would like to inform you that your account was created successfully<br>'.
+				'&nbsp;&nbsp;&nbsp;&nbsp;You can login to Internship Followup System by username <b><u>'.$username.'</u></b> and password <b><u>'.$password.'</u></b><br><br>'."\r\n".
+				'best regards,<br>'."\r\n".
+				'Admin'
+			);
+			if ($this->email->send()) {
+				return true;
+			}else{
+				echo $this->email->print_debugger();
+			}
 
 		}
 	}
@@ -332,10 +327,7 @@ class Welcome_IF extends CI_Controller {
 		$config['max_width']            = 10024;
 		$config['max_height']           = 7680;
 		$this->load->library('Upload',$config);
-		if (!$this->upload->do_upload('image')) {
-			$error = array('error'=>$this->upload->display_errors());
-			echo "Error Upload Image!";die();
-		}
+		$this->upload->do_upload('image');
 		$iData = array('upload_data'=>$this->upload->data());
 		foreach ($iData as $iData):
 			$file_name = $iData['file_name'];
@@ -444,10 +436,7 @@ class Welcome_IF extends CI_Controller {
 			$config['max_width']            = 10024;
 			$config['max_height']           = 7680;
 			$this->load->library('Upload',$config);
-			if (!$this->upload->do_upload('image')) {
-				$error = array('error'=>$this->upload->display_errors());
-				echo "Error Upload Image!";die();
-			}
+			$this->upload->do_upload('image');
 			$iData = array('upload_data'=>$this->upload->data());
 			foreach ($iData as $iData):
 				$file_name = $iData['file_name'];
@@ -468,8 +457,8 @@ class Welcome_IF extends CI_Controller {
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
 				'smtp_port' => 465,
-				'smtp_user' => 'devit.chea@student.passerellesnumeriques.org',
-				'smtp_pass' => '070220506',
+				'smtp_user' => 'pnc.temporary.vc2018@passerellesnumeriques.org',
+				'smtp_pass' => 'Pnc!Wep2018?',
 				'mailtype' => 'html',
 				'charset' => 'utf-8',
 				'wordwrap' => TRUE,
@@ -477,13 +466,13 @@ class Welcome_IF extends CI_Controller {
 			);
 			$this->load->library('email' ,$config);
 
-			$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
+			$this->email->from('pnc.temporary.vc2018@passerellesnumeriques.org','ERO TEAM');
 			$this->email->to($this->input->post('email'));
-			$this->email->subject('Password and Username login to Student Folloup System');
-			$this->email->message('Dear '.$firstname.' '.$lastname.', '."\r\n".
-				'I would like to inform you that your account was created successfully'.
-				' you can login to Selection committee application by username <b><u>'.$username.'</u></b> and password <b><u>'.$password.'</u></b>'."\r\n".
-				'best regards,'."\r\n".
+			$this->email->subject('Password and Username login to Internship Followup System');
+			$this->email->message('Dear '.$firstname.' '.$lastname.', <br><br>'."\r\n".
+				'I would like to inform you that your account was created successfully<br>'.
+				'&nbsp;&nbsp;&nbsp;&nbsp;You can login to Internship Followup System by username&#9758; <b><u>'.$username.'</u></b> and password &#9758;<b><u>'.$password.'</u></b><br><br>'."\r\n".
+				'best regards,<br>'."\r\n".
 				'Admin'
 			);
 			if ($this->email->send()) {
@@ -549,10 +538,7 @@ class Welcome_IF extends CI_Controller {
 		$config['max_width']            = 10024;
 		$config['max_height']           = 7680;
 		$this->load->library('Upload',$config);
-		if (!$this->upload->do_upload('image')) {
-			$error = array('error'=>$this->upload->display_errors());
-			echo "Error Upload Image!";die();
-		}
+		$this->upload->do_upload('image');
 		$iData = array('upload_data'=>$this->upload->data());
 		foreach ($iData as $iData):
 			$file_name = $iData['file_name'];
@@ -638,10 +624,7 @@ class Welcome_IF extends CI_Controller {
 		$config['max_width']            = 10024;
 		$config['max_height']           = 7680;
 		$this->load->library('Upload',$config);
-		if (!$this->upload->do_upload('image')) {
-			$error = array('error'=>$this->upload->display_errors());
-			echo "Error Upload Image!";die();
-		}
+		$this->upload->do_upload('image');
 		$iData = array('upload_data'=>$this->upload->data());
 		foreach ($iData as $iData):
 			$file_name = $iData['file_name'];
@@ -723,11 +706,8 @@ class Welcome_IF extends CI_Controller {
 			$config['max_width']            = 10024;
 			$config['max_height']           = 7680;
 			$this->load->library('Upload',$config);
-			if (!$this->upload->do_upload('image')) {
-				$error = array('error'=>$this->upload->display_errors());
-				echo "Error Upload Image!";die();
-			}
-			$iData = array('upload_data'=>$this->upload->data());
+			$this->upload->do_upload('image');
+			$iData = array('image'=>$this->upload->data());
 			foreach ($iData as $iData):
 				$file_name = $iData['file_name'];
 			endforeach;
@@ -742,25 +722,25 @@ class Welcome_IF extends CI_Controller {
 			$this->load->view('pages/student/index.php',$data);
 			$this->load->view('templates/footer.php');			
 			$config = array(
-			  'protocol' => 'smtp',
-			  'smtp_host' => 'ssl://smtp.googlemail.com',
-			  'smtp_port' => 465,
-			  'smtp_user' => 'devit.chea@student.passerellesnumeriques.org',
-			  'smtp_pass' => '070220506',
-			  'mailtype' => 'html',
-			  'charset' => 'utf-8',
-			  'wordwrap' => TRUE,
-			  'newline' => "\r\n"
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				'smtp_user' => 'pnc.temporary.vc2018@passerellesnumeriques.org',
+				'smtp_pass' => 'Pnc!Wep2018?',
+				'mailtype' => 'html',
+				'charset' => 'utf-8',
+				'wordwrap' => TRUE,
+				'newline' => "\r\n"
 			);
 			$this->load->library('email',$config);
 
-			$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
-			$this->email->to($this->input->post('schoolemail','peremail'));
-			$this->email->subject('Password and User Loin to System');
-			$this->email->message('Dear '.$firstname.' '.$lastname.', '."\r\n".
-				'I would like to inform you that your account was created successfully'.
-				' you can login to Selection committee application by username <b><u>'.$username.'</u></b> and password <b><u>'.$password.'</u></b>'."\r\n".
-				'best regards,'."\r\n".
+			$this->email->from('pnc.temporary.vc2018@passerellesnumeriques.org','ERO TEAM');
+			$this->email->to($this->input->post('schoolemail'));
+			$this->email->subject('Password and Username login to Internship Followup System');
+			$this->email->message('Dear '.$firstname.' '.$lastname.', <br><br>'."\r\n".
+				'I would like to inform you that your account was created successfully<br>'.
+				'&nbsp;&nbsp;&nbsp;&nbsp;You can login to Internship Followup System by username <b><u>'.$username.'</u></b> and password <b><u>'.$password.'</u></b><br><br>'."\r\n".
+				'best regards,<br>'."\r\n".
 				'Admin'
 			);
 			if ($this->email->send()) {
@@ -842,55 +822,66 @@ class Welcome_IF extends CI_Controller {
 		$this->load->view('templates/footer.php');
 	}
 
-	/*Get all Events */
-
-	Public function getEvents()
-	{
-		$result=$this->Calendar_model->getEvents();
-		echo json_encode($result);
-	}
+	/* ==================*/
 	/* send email to someone*/
-	public function eroSendMail(){
-		$this->load->library('email');
-		$this->load->model('Calendar_model');
+	public function supervisorSendMail(){
+		$userEmail = $this->input->post('userEmail');
+		$userPass = $this->input->post('password');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => $userEmail,
+			'smtp_pass' => $userPass,
+			'mailtype' => 'html',
+			'charset' => 'utf-8',
+			'wordwrap' => TRUE,
+			'newline' => "\r\n"
+		);
+		$this->load->library('email',$config);
 
-		$this->email->from('devit.chea@student.passerellesnumeriques.org', 'ERO Team');
+		$this->email->from($userEmail);
+
 		$this->email->to($this->input->post('email'));
 		$this->email->subject($this->input->post('title'));
 		$this->email->message($this->input->post('description'));
 		if ($this->email->send()) {
-			return true;
+			return TRUE;
 		}else{
-			return $this->email->print_debugger();;
+			echo $this->email->print_debugger();
+		}
+	}
+		Public function getEvents()
+		{
+			$result=$this->Calendar_model->getEvents();
+			echo json_encode($result);
+
+		}
+	/*Add new event */
+		Public function addEvent()
+		{
+			$result=$this->Calendar_model->AddEvent();
+			echo $result;
+			$this->supervisorSendMail();
 		}
 
-	}
+		/*Update Event */
+		Public function updateEvent()
+		{
+			$result=$this->Calendar_model->supdateEvent();
+			echo $result;
+			$this->supervisorSendMail();
+		}
 
-	/*Add new event */
-	/*Add new event */
-	Public function addEvent()
-	{
-		$result=$this->Calendar_model->AddEvent();
-		echo $result;
-		$this->eroSendMail();
-	}
-	/*Update Event */
-	Public function updateEvent()
-	{
-		$result=$this->Calendar_model->updateEvent();
-		echo $result;
-		$this->eroSendMail();
-	}
-	/*Delete Event*/
-	Public function deleteEvent()
-	{
-		$result=$this->Calendar_model->deleteEvent();
-		echo $result;
+		Public function sdeleteEvent()
+		{
+			$result=$this->Calendar_model->deleteEvent();
+			echo $result;
+		}
+	// /*Get all Events */
 
-	}
 	Public function dragUpdateEvent()
 	{	
-
 		$result=$this->Calendar_model->dragUpdateEvent();
 		echo $result;
 	}
@@ -902,7 +893,6 @@ class Welcome_IF extends CI_Controller {
 		$this->load->Model('users_model');
 		$data['comment'] = $this->users_model->getComment($stuId);
 		$data['stuComment'] = $this->users_model->getStuComment($stuId);
-		var_dump($data['stuComment']);die();
 		$data['activeLink'] = 'student';
 		$this->load->view('templates/header.php',$data);
 		$this->load->view('menu/index.php',$data);

@@ -20,7 +20,7 @@
 			<?php $imagepart =  "assets/images/users/".$student['picture'];?> 
 			<br>
 			<img src="<?php echo base_url();?><?php echo $imagepart; ?>" alt=""  id="viewStudent"  style="height: 200px; width: 230px; margin-top: 17px; padding: 10px;" >
-			<div style="margin-left: 90px;">				
+			<div style="margin-left: 90px;">	
 			<label for=""><?php echo $student['firstname']; ?></label>
 			<label for=""><?php echo $student['lastname']; ?></label>
 			</div>

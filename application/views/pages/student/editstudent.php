@@ -35,12 +35,6 @@
 						</div>
 					</div>
 					<div class="form-group row col-md-6 group-col-stu">
-						<label class="col-sm-4 col-form-label" for="">Password</label>
-						<div class="col-sm-8">
-							<input type="text" name="password" id="" class="form-control" placeholder="..." value="<?php echo $student['password']; ?>">
-						</div>
-					</div>
-					<div class="form-group row col-md-6 group-col-stu">
 						<label class="col-sm-4 col-form-label" for="">Phone Number</label>
 						<div class="col-sm-8">
 							<input type="text" name="phone" id="" class="form-control" placeholder="..." value="<?php echo $student['phone']; ?>">
@@ -78,12 +72,6 @@
 						</div>
 					</div>
 					<div class="form-group row col-md-6 group-col-stu">
-						<label class="col-sm-4 col-form-label" for="">Hired</label>
-						<div class="col-sm-2">
-							<input type="checkbox" class="custom-control-input" name="hired">
-						</div>
-					</div>
-					<div class="form-group row col-md-6 group-col-stu">
 						<label class="col-sm-4 col-form-label" for="">School Email</label>
 						<div class="col-sm-8">
 							<input type="text" name="schoolemail" id="" class="form-control" placeholder="..." value="<?php echo $student['schoolemail']; ?>">
@@ -93,6 +81,18 @@
 						<label class="col-sm-4 col-form-label" for="">Profile picture</label>
 						<div class="col-sm-8">
 							<input type="file" name="image" id="" class="form-control" placeholder="...">
+						</div>
+					</div>
+					<div class="form-group row col-md-6 group-col-stu">
+						<label class="col-sm-4 col-form-label" for=""></label>
+						<div class="col-sm-8">
+							<input type="hidden">
+						</div>
+					</div>
+					<div class="form-group row col-md-6 group-col-stu">
+						<label class="col-sm-4 col-form-label" for=""></label>
+						<div class="col-sm-8">
+							<input type="hidden">
 						</div>
 					</div><br><br><br>
 					<div class="col-md-4"></div>
