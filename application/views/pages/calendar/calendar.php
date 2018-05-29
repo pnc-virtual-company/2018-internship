@@ -29,8 +29,18 @@
                 <form class="form-horizontal" id="crud-form">
                     <input type="hidden" id="start">
                     <input type="hidden" id="end">
-                    <input type="hidden" id="userEmail" value="true">
-                    <input type="hidden" id="password" value="true">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="title">Your Email</label>
+                        <div class="col-md-12">
+                            <input id="userEmail" name="userEmail" type="text" class="form-control input-md" />
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="title">Email Password</label>
+                        <div class="col-md-12">
+                            <input id="password" name="password" type="password" class="form-control input-md" />
+                        </div>
+                    </div>  
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="title">Title</label>
                         <div class="col-md-12">

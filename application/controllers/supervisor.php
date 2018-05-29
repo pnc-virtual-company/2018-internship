@@ -60,7 +60,7 @@ class supervisor extends CI_Controller {
 		$this->load->Model('Supervisor_model');
 	    $data['student'] = $this->Supervisor_model->getDataStudentDetail($studentId);
 	    $data['activeLink'] = 'student';
-		$this->load->view('templates/header.php');
+		$this->load->view('templates/header.php', $data);
 		$this->load->view('menu/supervisorMenu.php', $data);
 		$this->load->view('supervisorDashboard/student/studentProfile.php',$data);
 		$this->load->view('templates/footer.php');
@@ -84,7 +84,7 @@ class supervisor extends CI_Controller {
 	    	$data['student'] =  array('question0' => 0);
         }
 	    $data['activeLink'] = 'questionnair';	
-	    $this->load->view('templates/header.php');
+	    $this->load->view('templates/header.php', $data);
 		$this->load->view('menu/supervisorMenu.php', $data);
 		$this->load->view('supervisorDashboard/questionnair.php',$data);
 		$this->load->view('templates/footer.php');		
@@ -126,11 +126,10 @@ class supervisor extends CI_Controller {
 	    $data['student'] = $this->Supervisor_model->saveQuestionnaire($stuid,$sex,$major,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10,$q11,$q12,$q13,$q14,$q15,$q16,$q17);
 	    $data['student'] = $this->Supervisor_model->countStudent();
 	    $data['activeLink'] = 'questionnaire';
-     	$this->load->view('templates/header.php');
+     	$this->load->view('templates/header.php', $data);
      	$this->load->view('menu/supervisorMenu.php' ,$data);
      	$this->load->view('supervisorDashboard/index.php',$data);
      	$this->load->view('templates/footer.php');
-	    $this->sendMailToSupervisor();	
 	}
 /**
  * To sent email to supervisor when supervisor submit student's questionniar

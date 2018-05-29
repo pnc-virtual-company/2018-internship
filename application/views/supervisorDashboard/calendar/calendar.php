@@ -36,7 +36,7 @@
                         </div>
                     </div> 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="title">Password Eamail</label>
+                        <label class="col-md-4 control-label" for="title">Email Password</label>
                         <div class="col-md-12">
                             <input id="password" name="password" type="password" class="form-control input-md" />
                         </div>
