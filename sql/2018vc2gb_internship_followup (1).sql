@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2018 at 03:31 AM
+-- Generation Time: May 30, 2018 at 04:13 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -136,9 +136,10 @@ CREATE TABLE `events` (
 
 INSERT INTO `events` (`id`, `title`, `description`, `color`, `start`, `end`, `allDay`, `email`, `userEmail`, `password`) VALUES
 (42, 'Meeting', 'lkjhgfdsuytre', '#18b315', '2018-05-02 00:00:00', '2018-05-03 00:00:00', 'true', 'premmannpnc@gmail.com', 'davit.chea123@gmail.com', 'davit123'),
-(58, 'Meeting with client', 'Dear student, I would like to invite meeting with you. best Regard by devit chea', '#ab0e9b', '2018-05-17 00:00:00', '2018-05-18 00:00:00', 'true', 'devit.chea@student.passerellesnumeriques.org', 'davit.chea123@gmail.com', 'davit123'),
 (50, 'Meeting', 'Dear student ', '#3a87ad', '2018-05-09 00:00:00', '2018-05-10 00:00:00', 'true', 'devit.chea@student.passerellesnumeriques.org', 'davit.chea123@gmail.com', 'davit123'),
-(52, 'test last version', 'testingasdkfalksdfladlasfasd', '#eba61a', '2018-05-11 00:00:00', '2018-05-12 00:00:00', 'true', 'bunthean.mov2727@gmail.com', 'bunthean.mov2727@gmail.com', '1234567bb');
+(52, 'test last version', 'testingasdkfalksdfladlasfasd', '#eba61a', '2018-05-11 00:00:00', '2018-05-12 00:00:00', 'true', 'bunthean.mov2727@gmail.com', 'bunthean.mov2727@gmail.com', '1234567bb'),
+(60, 'test version', 'test', '#f52586', '2018-04-30 00:00:00', '2018-05-01 00:00:00', 'true', 'devit.chea@student.passerellesnumeriques.org', 'bunthean.mov2727@gmail.com', '1234567bb'),
+(61, 'asdfasdfasdfasdfasdfasfasdfasdfas', 'asdfasdf', '#5132c2', '2018-05-07 00:00:00', '2018-05-08 00:00:00', 'true', 'bunthean.mov2727@gmail.com', 'bunthean.mov2727@gmail.com', '1234567bb');
 
 -- --------------------------------------------------------
 
@@ -267,7 +268,8 @@ INSERT INTO `questionnaire` (`id`, `question1`, `question2`, `question3`, `quest
 (41, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '                                                   ', '                                                   ', 27, NULL, NULL),
 (42, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '                                                   ', '                                                   ', 28, NULL, NULL),
 (43, NULL, 1, 1, 4, 3, 5, 3, 4, 5, 4, 5, 0, 3, 3, 3, '', '', 21, 'WEB', 'Male'),
-(44, 5, 1, 1, 4, 3, 5, 3, 4, 5, 4, 5, 0, 3, 3, 3, 'test', 'test', 21, 'WEB', 'Male');
+(44, 5, 1, 1, 4, 3, 5, 3, 4, 5, 4, 5, 0, 3, 3, 3, 'test', 'test', 21, 'WEB', 'Male'),
+(45, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 'testing', 'testing', 27, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -298,11 +300,9 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`id`, `firstname`, `lastname`, `batch`, `year`, `schoolemail`, `peremail`, `phone`, `hire`, `password`, `username`, `picture`, `supervisor_id`, `userrole_id`) VALUES
 (21, 'Bunthean', 'MOV', 'Web', 2018, 'bunthean.mov2727@gmail.com', 'bunthean.mov2727@gmail.com', 964282301, NULL, NULL, 'bunthean', 'photo.jpg', 14, 4),
-(25, 'Sarith', 'reurn', 'Web', 2018, 'samreth.reurn@student.passerellesnumeriques.o', 'samreth.reurn@gmail.com', 9723498, NULL, '$2a$08$NKPiSRI6dgGI8eUPr5otHephLKHqKbYEzOlIz/JsnO1bA2GfM/ose', 'samreth', '', 12, 4),
 (27, 'Soben', 'Khun', 'Web', 2018, 'soben.khun@student.passerellesnumeriques.org', 'soben.khun@gmail.com', 12399993, NULL, '$2a$08$ZEyUWIE30Jb/ioesMhO0rOHB1sEI.GSk1AIF2my3QtC2e/py6i5Mu', 'soben.khun', 'IMG_0715_Résolution_de_lécran1.JPG', 14, 4),
 (28, 'devit', 'chea', 'Web', 2018, 'devit.chea@student.passerellesnumeriques.org', 'davit.chea123@gmail.com', 988383848, NULL, NULL, 'devit chea', 'IMG_3661.JPG', 14, 4),
 (30, 'Chan', 'Thintha', 'Web', 2018, 'thintha.chan@student.passerellesnumeriques.or', 'Thintha.chan99@gmail.com', 9544335, NULL, NULL, 'Thintha', 'IMG_0565_Résolution_de_lécran.JPG', 14, 4),
-(32, 'Bunla', 'rat', 'Web', 2018, 'bunla.rat@gmail.com', 'bula.rat@gmail.com', 123456789, NULL, '$2a$08$kyW60rSrBgnJVKvqDRAxvOfbhcIJemTjRKoJYOORWQFzs0WxRz/Iy', 'rbunla', 'bunla1.JPG', 15, 4),
 (33, 'Daken', 'SOK', 'Web', 2018, 'daken.sok@student.passerellesnumeriqu.org', 'daken.sok@gmail.com', 964282301, NULL, '$2a$08$DB3aa1.b.wQ5VDoPoQbGd.IlxM.0cC47ptuZyinkn5YM.VuweRPHu', 'daken', 'IMG_0535_Résolution_de_lécran.JPG', 16, 4);
 
 -- --------------------------------------------------------
@@ -365,7 +365,7 @@ INSERT INTO `tutor` (`id`, `firstname`, `lastname`, `position`, `email`, `phone`
 (20, 'Pisey', 'Nith', 'SNA Trainer', 'example@gmail.com', 987654, '186037.png', '$2a$08$aehbwmepH4T1ZgQeVzBvPuGCS6kUSz2qZlAATZ8qDdWLkhYRB52bS', 'npisey', 9, 2),
 (21, 'Chanak', 'Chun', 'Web Trainer', 'example@gmail.com', 9876543, '194826.png', '$2a$08$OJBifOqfGlX8GbqFOL2Y.eEAdfm4v4NvDJGZM/lt0ZiKh8HvleGAK', 'cchanak', 10, 2),
 (22, 'Kea', 'Lonh', 'SNA Trainer', 'example@gmail.com', 987654, 'images_(2).png', '$2a$08$j7B7p3xEZybXNoOFppK56eA.ILv3.id.1q21HooDH3ROmH5m5mAHK', 'lkea', 11, 2),
-(23, 'sokphek', 'Ros', 'SNA Trainer', 'example@gmail.com', 9876543, 'images.png', '$2a$08$qXJBO9YwydLXJc2lZXofXeOwwl7vrO2DkW5S5TiSmP8criK0WgQbq', 'rsokphek', 12, 2);
+(23, 'sokphek', 'Ros', 'SNA Trainer', 'example@gmail.com', 9876543, 'IMG_0709_Résolution_de_lécran.JPG', '$2a$08$qXJBO9YwydLXJc2lZXofXeOwwl7vrO2DkW5S5TiSmP8criK0WgQbq', 'rsokphek', 7, 2);
 
 -- --------------------------------------------------------
 
@@ -591,13 +591,13 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `questionnaire`
 --
 ALTER TABLE `questionnaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `student`
