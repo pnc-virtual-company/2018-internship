@@ -6,7 +6,7 @@ $(function(){
     $('#color').colorpicker(); // Colopicker
     
 
-    var base_url='http://localhost/skeleton/'; // Here i define the base_url
+    var base_url='http://kratie/2018vc2gb/'; // Here i define the base_url
 
     // Fullcalendar
     $('#calendar').fullCalendar({

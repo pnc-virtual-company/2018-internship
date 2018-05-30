@@ -138,9 +138,9 @@ class supervisor extends CI_Controller {
 	public function sendMailToSupervisor()
 	{
 		$this->load->library('email');
-		$messages = "<h2>Hello, this is message for complete a questionnaire </h2>";
+		$messages = "Hello, this is message for complete a questionnaire";
 		$this->email->from('bunthean.mov@student.passerellesnumeriques.org', 'Supervisor');
-		$this->email->to('pnc.temporary.vc2018@passerellesnumeriques.org', 'ERO Team');
+		$this->email->to('bunthean.mov2727@gmail.com', 'ERO Team');
 		$this->email->subject("Complete student's questionnaire.");
 		$this->email->message($messages);
 		if ($this->email->send()) {
