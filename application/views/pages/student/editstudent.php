@@ -5,7 +5,7 @@
 			<i class="mdi mdi-chevron-left mdi-15px text-white"></i>Back
 		</button>
 	</a>
-	<h3 class="text-primary text-center">Add Student</h3><br>
+	<h3 class="text-primary text-center">Edit Student</h3><br>
 	<div class="row">
 		<div class="border border-form rounded bg-white">
 		<br>
