@@ -763,6 +763,7 @@ class Welcome_IF extends CI_Controller {
 		$this->load->view('pages/student/addComment.php',$data);
 		$this->load->view('templates/footer.php');			
 	}
+	// validateComment
 	public function validateComment()
 	{
 		$cmtId = $_GET['id'];

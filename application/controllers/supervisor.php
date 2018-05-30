@@ -130,9 +130,6 @@ class supervisor extends CI_Controller {
      	$this->load->view('menu/supervisorMenu.php' ,$data);
      	$this->load->view('supervisorDashboard/index.php',$data);
      	$this->load->view('templates/footer.php');
-     	if ($data['student']) {
-	    $this->sendMailToSupervisor();	
-     	}
 	}
 /**
  * To sent email to supervisor when supervisor submit student's questionniar

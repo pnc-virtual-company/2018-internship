@@ -74,10 +74,10 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=kratie; dbname=2018vc2gb_internship_followup; charset=utf8;',
-	'hostname' => 'kratie',
-	'username' => '2018vc2gb',
-	'password' => '2018vc2gb',
+	'dsn'	=> 'mysql:host=localhost; dbname=2018vc2gb_internship_followup; charset=utf8;',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => '2018vc2gb_internship_followup',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
