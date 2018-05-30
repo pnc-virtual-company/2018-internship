@@ -10,6 +10,8 @@ class cStudent extends CI_controller {
 			redirect('connection/login');
 
 		}
+		$this->load->Model('users_model');
+		$this->load->Model('Calendar_model');
 	}
 	// Student home
 	public function index() 
@@ -54,6 +56,7 @@ class cStudent extends CI_controller {
 	{
 		$data['activeLink'] = 'Calendar';
 		$this->load->view('templates/header.php',$data);
+		$data['email'] = $this->users_model->mGetEmail();
 		$this->load->view('menu/studentMenu.php',$data);
 		$this->load->view('student/calendarStu.php',$data);
 			// $this->load->view('templates/footer.php');
@@ -175,37 +178,5 @@ class cStudent extends CI_controller {
 		$this->load->view('templates/footer.php');
 	}
 
-// ==========================================================
-	
-	// edit
-	// public function editReport()
-	// {
-	// 	$this->load->helper('form');
-	// 	$Id = $_GET['id'];
-	// 	$Date = $this->input->post("date");
-	// 	$startTime = $this->input->post("starttime");
-	// 	$endTime = $this->input->post("endtime");
-	// 	$workActivities = $this->input->post("activities");
-	// 	$Learner = $this->input->post("yourlearn");
-	// 	$Issoues = $this->input->post("issues");
-	// 	$Solution = $this->input->post("solution");
-	// 	$toDo = $this->input->post("todo");
-	// 	$Comment = $this->input->post("comment");
-
-	// 	$this->load->Model('m_worklog');
-	// 	$this->m_worklog->updateWorklog($Id,$Date,$startTime,$endTime,$workActivities,$Learner,$Issoues,$Solution,$toDo,$Comment);
-
-	// 	$data['worklog'] = $this->m_worklog->weeklyWorklog();
-	// 	$data['activeLink'] = 'work-log';
-	// 	if($this->input->post('btn-submit') != NULL ){
-	// 		echo "error";
-	// 	} else {
-	// 		redirect("cStudent/getReport");
-	// 	}
-	// 	// $this->load->view('templates/header.php',$data);
-	// 	// $this->load->view('menu/index.php',$data);
-	// 	// $this->load->view('pages/student/index.php',$data);
-	// 	// $this->load->view('templates/footer.php');
-	// }
 }
 ?>

@@ -43,12 +43,6 @@
 						</div>
 					</div>
 					<div class="form-group row col-md-6 group-col-stu">
-						<label class="col-sm-4 col-form-label" for="">Password</label>
-						<div class="col-sm-8">
-							<input type="text" name="password" id="" class="form-control" placeholder="..." value="<?php echo $tutor['password'] ?>">
-						</div>
-					</div>
-					<div class="form-group row col-md-6 group-col-stu">
 						<label class="col-sm-4 col-form-label" for="">School Email</label>
 						<div class="col-sm-8">
 							<input type="text" name="sEmail" id="" class="form-control" placeholder="..." value="<?php echo $tutor['email'] ?>">
@@ -74,6 +68,12 @@
 							   <option><?php echo $company['name']; ?></option>
 							 <?php endforeach ?>
 							 </select>
+						</div>
+					</div>
+					<div class="form-group row col-md-6 group-col-stu">
+						<label class="col-sm-4 col-form-label" for=""></label>
+						<div class="col-sm-8">
+							<input type="hidden">
 						</div>
 					</div>
 					<div class="form-group row col-md-6 group-col-stu">

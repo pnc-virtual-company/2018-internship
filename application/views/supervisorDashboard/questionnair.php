@@ -1719,7 +1719,6 @@
             </div>
             <div class="c-button-section">
                <div class="c-ac tion">
-                  <button type="submit" class="c-button" id="c-submit-button" style="float: right;">Submit</button>
                   <button type="submit" class="c-button" id="c-submit-button" style="float: left; background-color: green;">Save</button>
                </div>
             </div>
